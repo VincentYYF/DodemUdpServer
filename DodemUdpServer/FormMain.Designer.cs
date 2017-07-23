@@ -38,8 +38,11 @@
             this.comboBox_IP = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBox_PassWordOld = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.button_GetPassWord = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox_New_PW = new System.Windows.Forms.TextBox();
+            this.textBox_PassWordNew = new System.Windows.Forms.TextBox();
             this.button_SetPassWord = new System.Windows.Forms.Button();
             this.button_SetParameters = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -66,12 +69,11 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.button_GetPassWord = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBox_PassWordOld = new System.Windows.Forms.TextBox();
+            this.label_SelectDeviceName = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tabControl_Basic.SuspendLayout();
@@ -173,7 +175,7 @@
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.button_GetPassWord);
             this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.textBox_New_PW);
+            this.groupBox3.Controls.Add(this.textBox_PassWordNew);
             this.groupBox3.Controls.Add(this.button_SetPassWord);
             this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
@@ -181,6 +183,33 @@
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "基本信息";
+            // 
+            // textBox_PassWordOld
+            // 
+            this.textBox_PassWordOld.Location = new System.Drawing.Point(67, 60);
+            this.textBox_PassWordOld.Name = "textBox_PassWordOld";
+            this.textBox_PassWordOld.Size = new System.Drawing.Size(100, 21);
+            this.textBox_PassWordOld.TabIndex = 6;
+            this.textBox_PassWordOld.Text = "1234";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(14, 64);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 12);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "老密码";
+            // 
+            // button_GetPassWord
+            // 
+            this.button_GetPassWord.Location = new System.Drawing.Point(190, 58);
+            this.button_GetPassWord.Name = "button_GetPassWord";
+            this.button_GetPassWord.Size = new System.Drawing.Size(75, 23);
+            this.button_GetPassWord.TabIndex = 4;
+            this.button_GetPassWord.Text = "获取终端密码";
+            this.button_GetPassWord.UseVisualStyleBackColor = true;
+            this.button_GetPassWord.Click += new System.EventHandler(this.button_GetPassWord_Click);
             // 
             // label10
             // 
@@ -191,12 +220,12 @@
             this.label10.TabIndex = 3;
             this.label10.Text = "新密码";
             // 
-            // textBox_New_PW
+            // textBox_PassWordNew
             // 
-            this.textBox_New_PW.Location = new System.Drawing.Point(67, 17);
-            this.textBox_New_PW.Name = "textBox_New_PW";
-            this.textBox_New_PW.Size = new System.Drawing.Size(100, 21);
-            this.textBox_New_PW.TabIndex = 2;
+            this.textBox_PassWordNew.Location = new System.Drawing.Point(67, 17);
+            this.textBox_PassWordNew.Name = "textBox_PassWordNew";
+            this.textBox_PassWordNew.Size = new System.Drawing.Size(100, 21);
+            this.textBox_PassWordNew.TabIndex = 2;
             // 
             // button_SetPassWord
             // 
@@ -245,6 +274,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.label_SelectDeviceName);
             this.groupBox5.Location = new System.Drawing.Point(716, 131);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(280, 123);
@@ -446,31 +476,15 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "基本命令";
             // 
-            // button_GetPassWord
+            // label_SelectDeviceName
             // 
-            this.button_GetPassWord.Location = new System.Drawing.Point(190, 58);
-            this.button_GetPassWord.Name = "button_GetPassWord";
-            this.button_GetPassWord.Size = new System.Drawing.Size(75, 23);
-            this.button_GetPassWord.TabIndex = 4;
-            this.button_GetPassWord.Text = "获取终端密码";
-            this.button_GetPassWord.UseVisualStyleBackColor = true;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(14, 69);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 12);
-            this.label11.TabIndex = 5;
-            this.label11.Text = "老密码";
-            // 
-            // textBox_PassWordOld
-            // 
-            this.textBox_PassWordOld.Location = new System.Drawing.Point(67, 60);
-            this.textBox_PassWordOld.Name = "textBox_PassWordOld";
-            this.textBox_PassWordOld.Size = new System.Drawing.Size(100, 21);
-            this.textBox_PassWordOld.TabIndex = 6;
-            this.textBox_PassWordOld.Text = "1234";
+            this.label_SelectDeviceName.AutoSize = true;
+            this.label_SelectDeviceName.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_SelectDeviceName.Location = new System.Drawing.Point(62, 43);
+            this.label_SelectDeviceName.Name = "label_SelectDeviceName";
+            this.label_SelectDeviceName.Size = new System.Drawing.Size(163, 29);
+            this.label_SelectDeviceName.TabIndex = 0;
+            this.label_SelectDeviceName.Text = "未选择设备";
             // 
             // Form_Main
             // 
@@ -491,6 +505,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
@@ -531,7 +547,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox_New_PW;
+        private System.Windows.Forms.TextBox textBox_PassWordNew;
         private System.Windows.Forms.TextBox textBox_AHPassWord;
         private System.Windows.Forms.TextBox textBox_RestarTime;
         private System.Windows.Forms.TextBox textBox_OnlineTime;
@@ -546,6 +562,7 @@
         private System.Windows.Forms.TextBox textBox_PassWordOld;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button button_GetPassWord;
+        private System.Windows.Forms.Label label_SelectDeviceName;
     }
 }
 

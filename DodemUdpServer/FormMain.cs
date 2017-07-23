@@ -182,16 +182,29 @@ namespace DodemUdpServer
 
         private void button_SetPassWord_Click(object sender, EventArgs e)
         {
-            string strPassWordOld = this.textBox_PassWord.Text;
-            string strPassWordNew = this.textBox_New_PW.Text;
+            string strPassWordOld = this.textBox_PassWordOld.Text;
+            string strPassWordNew = this.textBox_PassWordNew.Text;
             byte[] ChangePassWordByte = new byte[8];
             string strPassWord;
-            if (SelectDeviceName!=null && strPassWordOld.Length != 4 && strPassWordNew.Length != 4)
+            if (SelectDeviceName!=null)
             {
-                strPassWord = strPassWordOld + strPassWordNew;
-                ChangePassWordByte = System.Text.Encoding.Default.GetBytes(strPassWord);
+                if (strPassWordOld.Length == 4 && strPassWordNew.Length == 4)
+                {
+                    strPassWord = strPassWordOld + strPassWordNew;
+                    ChangePassWordByte = System.Text.Encoding.Default.GetBytes(strPassWord);
+                    mUDPServer.SendMessage_SetDevicePassWord(SelectDeviceName, ChangePassWordByte);
+                }
+                else
+                {
+                    MessageBox.Show("密码框请填写完整");
+                }
+               
             }
-            mUDPServer.SendMessage_SetDevicePassWord(SelectDeviceName, ChangePassWordByte);
+            else
+            {
+                MessageBox.Show("没有选中设备");
+            }
+           
         }
 
         private void button_SetParameters_Click(object sender, EventArgs e)
@@ -212,6 +225,7 @@ namespace DodemUdpServer
         public int updateDeviceInfo(string SelectDeviceName)
         {
             int res = 0;
+            this.label_SelectDeviceName.Text = SelectDeviceName;
             res = mUDPServer.GetDeviceStatus(SelectDeviceName);
             return res;
         }
@@ -219,6 +233,16 @@ namespace DodemUdpServer
         private void treeView_DeviceList_DoubleClick(object sender, EventArgs e)
         {
             
+        }
+
+        /// <summary>
+        /// 获取当前设备的真实密码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_GetPassWord_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

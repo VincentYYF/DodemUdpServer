@@ -772,29 +772,24 @@ namespace DodemUdpServer
             List<byte> byteSource = new List<byte>();
 
             byteSource.Add(0x68);
+            byteSource.Add(DeviceIMEI[0]);
             byteSource.Add(DeviceIMEI[1]);
             byteSource.Add(DeviceIMEI[2]);
             byteSource.Add(DeviceIMEI[3]);
             byteSource.Add(DeviceIMEI[4]);
             byteSource.Add(DeviceIMEI[5]);
-            byteSource.Add(DeviceIMEI[6]);
-            byteSource.Add(0x01);
+            byteSource.Add(0x02);
             byteSource.Add(0x00);
-            byteSource.Add(0x06);
+            byteSource.Add(0x08);
             //byte[] nowTime = BitConverter.GetBytes(DateTime.Now.);
-            DateTime now = DateTime.Now;
-            int tempdate = now.Year - 2000;
-            byteSource.Add((byte)(tempdate));
-            tempdate = now.Month;
-            byteSource.Add((byte)(tempdate));
-            tempdate = now.Day;
-            byteSource.Add((byte)(tempdate));
-            tempdate = now.Hour;
-            byteSource.Add((byte)(tempdate));
-            tempdate = now.Minute;
-            byteSource.Add((byte)(tempdate));
-            tempdate = now.Second;
-            byteSource.Add((byte)(tempdate));
+            byteSource.Add(strPassWord[0]);
+            byteSource.Add(strPassWord[1]);
+            byteSource.Add(strPassWord[2]);
+            byteSource.Add(strPassWord[3]);
+            byteSource.Add(strPassWord[4]);
+            byteSource.Add(strPassWord[5]);
+            byteSource.Add(strPassWord[6]);
+            byteSource.Add(strPassWord[7]);
 
             int CheckByte = 0;
             for (int i = 1; i < byteSource.Count; i++)
@@ -805,8 +800,8 @@ namespace DodemUdpServer
 
             byteSource.Add((byte)(CheckByte));
             byteSource.Add(0x16);
-            byte[] TimeOrder = byteSource.ToArray();
-            return TimeOrder;
+            byte[] PassWordOrder = byteSource.ToArray();
+            return PassWordOrder;
         }
 
         public int GetDeviceStatus(string SelectDeviceName)
