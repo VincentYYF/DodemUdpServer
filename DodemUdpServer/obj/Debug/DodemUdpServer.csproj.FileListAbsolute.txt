@@ -1,0 +1,10 @@
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\bin\Debug\DodemUdpServer.exe.config
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\bin\Debug\DodemUdpServer.exe
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\bin\Debug\DodemUdpServer.pdb
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\obj\Debug\DodemUdpServer.csprojResolveAssemblyReference.cache
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\obj\Debug\DodemUdpServer.Properties.Resources.resources
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\obj\Debug\DodemUdpServer.csproj.GenerateResource.Cache
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\obj\Debug\DodemUdpServer.exe
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\obj\Debug\DodemUdpServer.pdb
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\obj\Debug\DodemUdpServer.Form_Main.resources
+F:\Projects\C#\DodemUdpServer\DodemUdpServer\bin\Debug\MySql.Data.dll
