@@ -49,6 +49,13 @@
             this.textBox_PassWord = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label_DeviceVoltage = new System.Windows.Forms.Label();
+            this.label_DeviceSignal = new System.Windows.Forms.Label();
+            this.label_DeviceTime = new System.Windows.Forms.Label();
+            this.label_SelectDeviceName = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.treeView_DeviceList = new System.Windows.Forms.TreeView();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -69,10 +76,25 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.label_SelectDeviceName = new System.Windows.Forms.Label();
+            this.textBox_StationIpOld = new System.Windows.Forms.TextBox();
+            this.textBox_StationPortOld = new System.Windows.Forms.TextBox();
+            this.textBox_StationCardNumberOld = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.textBox_StationCardNumberNew = new System.Windows.Forms.TextBox();
+            this.textBox_StationPortNew = new System.Windows.Forms.TextBox();
+            this.textBox_StationIpNew = new System.Windows.Forms.TextBox();
+            this.labels = new System.Windows.Forms.Label();
+            this.textBox_DevicePassWord = new System.Windows.Forms.TextBox();
+            this.button_SetStation = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -179,7 +201,7 @@
             this.groupBox3.Controls.Add(this.button_SetPassWord);
             this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(444, 181);
+            this.groupBox3.Size = new System.Drawing.Size(431, 181);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "基本信息";
@@ -262,18 +284,40 @@
             this.textBox_PassWord.Name = "textBox_PassWord";
             this.textBox_PassWord.Size = new System.Drawing.Size(100, 21);
             this.textBox_PassWord.TabIndex = 2;
+            this.textBox_PassWord.Text = "1234";
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button_SetStation);
+            this.groupBox4.Controls.Add(this.textBox_DevicePassWord);
+            this.groupBox4.Controls.Add(this.labels);
+            this.groupBox4.Controls.Add(this.label18);
+            this.groupBox4.Controls.Add(this.label19);
+            this.groupBox4.Controls.Add(this.label20);
+            this.groupBox4.Controls.Add(this.textBox_StationCardNumberNew);
+            this.groupBox4.Controls.Add(this.textBox_StationPortNew);
+            this.groupBox4.Controls.Add(this.textBox_StationIpNew);
+            this.groupBox4.Controls.Add(this.label14);
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Controls.Add(this.label12);
+            this.groupBox4.Controls.Add(this.textBox_StationCardNumberOld);
+            this.groupBox4.Controls.Add(this.textBox_StationPortOld);
+            this.groupBox4.Controls.Add(this.textBox_StationIpOld);
             this.groupBox4.Location = new System.Drawing.Point(19, 11);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(288, 176);
+            this.groupBox4.Size = new System.Drawing.Size(431, 176);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "主动指令";
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.label17);
+            this.groupBox5.Controls.Add(this.label16);
+            this.groupBox5.Controls.Add(this.label15);
+            this.groupBox5.Controls.Add(this.label_DeviceVoltage);
+            this.groupBox5.Controls.Add(this.label_DeviceSignal);
+            this.groupBox5.Controls.Add(this.label_DeviceTime);
             this.groupBox5.Controls.Add(this.label_SelectDeviceName);
             this.groupBox5.Location = new System.Drawing.Point(716, 131);
             this.groupBox5.Name = "groupBox5";
@@ -281,6 +325,70 @@
             this.groupBox5.TabIndex = 12;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "类型";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(62, 97);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(53, 12);
+            this.label17.TabIndex = 6;
+            this.label17.Text = "设备电压";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(62, 81);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(53, 12);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "设备信号";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(62, 65);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(53, 12);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "设备时间";
+            // 
+            // label_DeviceVoltage
+            // 
+            this.label_DeviceVoltage.AutoSize = true;
+            this.label_DeviceVoltage.Location = new System.Drawing.Point(62, 97);
+            this.label_DeviceVoltage.Name = "label_DeviceVoltage";
+            this.label_DeviceVoltage.Size = new System.Drawing.Size(29, 12);
+            this.label_DeviceVoltage.TabIndex = 3;
+            this.label_DeviceVoltage.Text = "未知";
+            // 
+            // label_DeviceSignal
+            // 
+            this.label_DeviceSignal.AutoSize = true;
+            this.label_DeviceSignal.Location = new System.Drawing.Point(62, 81);
+            this.label_DeviceSignal.Name = "label_DeviceSignal";
+            this.label_DeviceSignal.Size = new System.Drawing.Size(29, 12);
+            this.label_DeviceSignal.TabIndex = 2;
+            this.label_DeviceSignal.Text = "未知";
+            // 
+            // label_DeviceTime
+            // 
+            this.label_DeviceTime.AutoSize = true;
+            this.label_DeviceTime.Location = new System.Drawing.Point(62, 64);
+            this.label_DeviceTime.Name = "label_DeviceTime";
+            this.label_DeviceTime.Size = new System.Drawing.Size(29, 12);
+            this.label_DeviceTime.TabIndex = 1;
+            this.label_DeviceTime.Text = "未知";
+            // 
+            // label_SelectDeviceName
+            // 
+            this.label_SelectDeviceName.AutoSize = true;
+            this.label_SelectDeviceName.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_SelectDeviceName.Location = new System.Drawing.Point(62, 27);
+            this.label_SelectDeviceName.Name = "label_SelectDeviceName";
+            this.label_SelectDeviceName.Size = new System.Drawing.Size(163, 29);
+            this.label_SelectDeviceName.TabIndex = 0;
+            this.label_SelectDeviceName.Text = "未选择设备";
             // 
             // groupBox6
             // 
@@ -332,6 +440,7 @@
             this.textBox_AHPassWord.Name = "textBox_AHPassWord";
             this.textBox_AHPassWord.Size = new System.Drawing.Size(100, 21);
             this.textBox_AHPassWord.TabIndex = 15;
+            this.textBox_AHPassWord.Text = "1234";
             // 
             // textBox_RestarTime
             // 
@@ -339,6 +448,7 @@
             this.textBox_RestarTime.Name = "textBox_RestarTime";
             this.textBox_RestarTime.Size = new System.Drawing.Size(100, 21);
             this.textBox_RestarTime.TabIndex = 14;
+            this.textBox_RestarTime.Text = "0";
             // 
             // textBox_OnlineTime
             // 
@@ -353,6 +463,7 @@
             this.textBox_SleepTime.Name = "textBox_SleepTime";
             this.textBox_SleepTime.Size = new System.Drawing.Size(100, 21);
             this.textBox_SleepTime.TabIndex = 12;
+            this.textBox_SleepTime.Text = "0";
             // 
             // textBox_SampIntevalr
             // 
@@ -360,6 +471,7 @@
             this.textBox_SampIntevalr.Name = "textBox_SampIntevalr";
             this.textBox_SampIntevalr.Size = new System.Drawing.Size(100, 21);
             this.textBox_SampIntevalr.TabIndex = 11;
+            this.textBox_SampIntevalr.Text = "600";
             // 
             // textBox_HeartTime
             // 
@@ -367,6 +479,7 @@
             this.textBox_HeartTime.Name = "textBox_HeartTime";
             this.textBox_HeartTime.Size = new System.Drawing.Size(100, 21);
             this.textBox_HeartTime.TabIndex = 10;
+            this.textBox_HeartTime.Text = "60";
             // 
             // label9
             // 
@@ -441,7 +554,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(456, 193);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "设备密码";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
@@ -452,7 +565,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(456, 193);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "主站指令";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPage3
@@ -463,7 +576,7 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(456, 193);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.Text = "设备参数";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // groupBox8
@@ -476,15 +589,128 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "基本命令";
             // 
-            // label_SelectDeviceName
+            // textBox_StationIpOld
             // 
-            this.label_SelectDeviceName.AutoSize = true;
-            this.label_SelectDeviceName.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_SelectDeviceName.Location = new System.Drawing.Point(62, 43);
-            this.label_SelectDeviceName.Name = "label_SelectDeviceName";
-            this.label_SelectDeviceName.Size = new System.Drawing.Size(163, 29);
-            this.label_SelectDeviceName.TabIndex = 0;
-            this.label_SelectDeviceName.Text = "未选择设备";
+            this.textBox_StationIpOld.Location = new System.Drawing.Point(107, 28);
+            this.textBox_StationIpOld.Name = "textBox_StationIpOld";
+            this.textBox_StationIpOld.Size = new System.Drawing.Size(100, 21);
+            this.textBox_StationIpOld.TabIndex = 0;
+            // 
+            // textBox_StationPortOld
+            // 
+            this.textBox_StationPortOld.Location = new System.Drawing.Point(107, 61);
+            this.textBox_StationPortOld.Name = "textBox_StationPortOld";
+            this.textBox_StationPortOld.Size = new System.Drawing.Size(100, 21);
+            this.textBox_StationPortOld.TabIndex = 1;
+            // 
+            // textBox_StationCardNumberOld
+            // 
+            this.textBox_StationCardNumberOld.Location = new System.Drawing.Point(107, 94);
+            this.textBox_StationCardNumberOld.Name = "textBox_StationCardNumberOld";
+            this.textBox_StationCardNumberOld.Size = new System.Drawing.Size(100, 21);
+            this.textBox_StationCardNumberOld.TabIndex = 2;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 32);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(77, 12);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "（旧）主站IP";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(7, 65);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(89, 12);
+            this.label13.TabIndex = 4;
+            this.label13.Text = "（旧）主站端口";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(7, 98);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(89, 12);
+            this.label14.TabIndex = 5;
+            this.label14.Text = "（旧）主站卡号";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(219, 98);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(89, 12);
+            this.label18.TabIndex = 11;
+            this.label18.Text = "（新）主站卡号";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(219, 65);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(89, 12);
+            this.label19.TabIndex = 10;
+            this.label19.Text = "（新）主站端口";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(219, 32);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(77, 12);
+            this.label20.TabIndex = 9;
+            this.label20.Text = "（新）主站IP";
+            // 
+            // textBox_StationCardNumberNew
+            // 
+            this.textBox_StationCardNumberNew.Location = new System.Drawing.Point(316, 94);
+            this.textBox_StationCardNumberNew.Name = "textBox_StationCardNumberNew";
+            this.textBox_StationCardNumberNew.Size = new System.Drawing.Size(100, 21);
+            this.textBox_StationCardNumberNew.TabIndex = 8;
+            // 
+            // textBox_StationPortNew
+            // 
+            this.textBox_StationPortNew.Location = new System.Drawing.Point(316, 61);
+            this.textBox_StationPortNew.Name = "textBox_StationPortNew";
+            this.textBox_StationPortNew.Size = new System.Drawing.Size(100, 21);
+            this.textBox_StationPortNew.TabIndex = 7;
+            // 
+            // textBox_StationIpNew
+            // 
+            this.textBox_StationIpNew.Location = new System.Drawing.Point(316, 28);
+            this.textBox_StationIpNew.Name = "textBox_StationIpNew";
+            this.textBox_StationIpNew.Size = new System.Drawing.Size(100, 21);
+            this.textBox_StationIpNew.TabIndex = 6;
+            // 
+            // labels
+            // 
+            this.labels.AutoSize = true;
+            this.labels.Location = new System.Drawing.Point(37, 133);
+            this.labels.Name = "labels";
+            this.labels.Size = new System.Drawing.Size(53, 12);
+            this.labels.TabIndex = 12;
+            this.labels.Text = "设备密码";
+            // 
+            // textBox_DevicePassWord
+            // 
+            this.textBox_DevicePassWord.Location = new System.Drawing.Point(107, 129);
+            this.textBox_DevicePassWord.Name = "textBox_DevicePassWord";
+            this.textBox_DevicePassWord.Size = new System.Drawing.Size(100, 21);
+            this.textBox_DevicePassWord.TabIndex = 13;
+            this.textBox_DevicePassWord.Text = "1234";
+            // 
+            // button_SetStation
+            // 
+            this.button_SetStation.Location = new System.Drawing.Point(316, 127);
+            this.button_SetStation.Name = "button_SetStation";
+            this.button_SetStation.Size = new System.Drawing.Size(75, 23);
+            this.button_SetStation.TabIndex = 14;
+            this.button_SetStation.Text = "设置主站";
+            this.button_SetStation.UseVisualStyleBackColor = true;
+            this.button_SetStation.Click += new System.EventHandler(this.button_SetStation_Click);
             // 
             // Form_Main
             // 
@@ -505,6 +731,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
@@ -563,6 +791,27 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button button_GetPassWord;
         private System.Windows.Forms.Label label_SelectDeviceName;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label_DeviceVoltage;
+        private System.Windows.Forms.Label label_DeviceSignal;
+        private System.Windows.Forms.Label label_DeviceTime;
+        private System.Windows.Forms.Button button_SetStation;
+        private System.Windows.Forms.TextBox textBox_DevicePassWord;
+        private System.Windows.Forms.Label labels;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox textBox_StationCardNumberNew;
+        private System.Windows.Forms.TextBox textBox_StationPortNew;
+        private System.Windows.Forms.TextBox textBox_StationIpNew;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox_StationCardNumberOld;
+        private System.Windows.Forms.TextBox textBox_StationPortOld;
+        private System.Windows.Forms.TextBox textBox_StationIpOld;
     }
 }
 
