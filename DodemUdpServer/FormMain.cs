@@ -14,6 +14,7 @@ using System.Threading;
 using System.Media;
 using System.Diagnostics;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace DodemUdpServer
 {
@@ -51,7 +52,7 @@ namespace DodemUdpServer
             mUDPServer.ByteMessageArrived += new UDPServerClass.ByteMessageHandler(UDPServer_ByteNessageArrived);
             mUDPServer.MessageDeviceOnline += new UDPServerClass.DeviceMessageHandler(UDPServer_DeviceOnline);
             mUDPServer.MessageDeviceStatus += new UDPServerClass.ByteMessageHandler(UDPServer_DeviceStatus);
-           
+
         }
 
         private void button_CloseServer_Click(object sender, EventArgs e)
@@ -97,8 +98,8 @@ namespace DodemUdpServer
         }
         void UDPServer_DeviceOnline(string DeviceIMEI)
         {
-            this.treeView_DeviceList.Invoke(new DelegateDealDeviceOnline(ChangeTree),DeviceIMEI);
-           
+            this.treeView_DeviceList.Invoke(new DelegateDealDeviceOnline(ChangeTree), DeviceIMEI);
+
         }
         public void InitLocalIpStatus()
         {
@@ -132,8 +133,8 @@ namespace DodemUdpServer
 
         public void InitDeviceTree()
         {
-//             this.treeView_DeviceList.SelectedNode.ForeColor = Color.Black;
-//             this.treeView_DeviceList.SelectedNode.BackColor = Color.Blue;
+            //             this.treeView_DeviceList.SelectedNode.ForeColor = Color.Black;
+            //             this.treeView_DeviceList.SelectedNode.BackColor = Color.Blue;
             DataSet ds_Department = getDataSet("type");
             foreach (DataRow dr in ds_Department.Tables[0].Rows)
             {
@@ -169,13 +170,45 @@ namespace DodemUdpServer
         public void EventUpdateStatus(byte[] Messages)
         {
             Console.WriteLine("处理收到的数据Byte:{0}", Encoding.Default.GetString(Messages, 0, Messages.Length));
+            if (Messages[7] == 0x05)
+            {
+                byte[] DeviceTime = new byte[6];
+                byte[] DeviceSignel = new byte[1];
+                byte[] DeviceVoltage = new byte[1];
+                DeviceTime[0] = Messages[10];
+                DeviceTime[0] = Messages[11];
+                DeviceTime[0] = Messages[12];
+                DeviceTime[0] = Messages[13];
+                DeviceTime[0] = Messages[14];
+                DeviceTime[0] = Messages[15];
+                DeviceSignel[0] = Messages[16];
+                DeviceVoltage[0] = Messages[17];
+                string strDeviceTime = (DeviceTime[0] + 2000).ToString("X2");
+                strDeviceTime += "-";
+                strDeviceTime = (DeviceTime[1]).ToString("X2");
+                strDeviceTime += "-";
+                strDeviceTime = (DeviceTime[2]).ToString("X2");
+                strDeviceTime += " ";
+                strDeviceTime = (DeviceTime[3]).ToString("X2");
+                strDeviceTime += ":";
+                strDeviceTime = (DeviceTime[4]).ToString("X2");
+                strDeviceTime += ":";
+                strDeviceTime = (DeviceTime[5]).ToString("X2");
+
+                string strDeviceSignel = DeviceSignel[0].ToString("X2");
+                string strDeviceVoltage = DeviceVoltage[0].ToString("X2");
+
+                this.label_DeviceTime.Text = strDeviceTime;
+                this.label_DeviceSignal.Text = strDeviceTime;
+                this.label_DeviceVoltage.Text = strDeviceTime;
+            }
         }
         public void FlashDeviceStatus(string Device_IMEI)
         {
             TreeNode tnRet = null;
             foreach (TreeNode tn in this.treeView_DeviceList.Nodes)
             {
-               /* tnRet = FindNode(tn, "");*/
+                /* tnRet = FindNode(tn, "");*/
                 if (tnRet != null) break;
             }
         }
@@ -186,7 +219,7 @@ namespace DodemUdpServer
             string strPassWordNew = this.textBox_PassWordNew.Text;
             byte[] ChangePassWordByte = new byte[8];
             string strPassWord;
-            if (SelectDeviceName!=null)
+            if (SelectDeviceName != null)
             {
                 if (strPassWordOld.Length == 4 && strPassWordNew.Length == 4)
                 {
@@ -198,20 +231,30 @@ namespace DodemUdpServer
                 {
                     MessageBox.Show("密码框请填写完整");
                 }
-               
+
             }
             else
             {
                 MessageBox.Show("没有选中设备");
             }
-           
+
         }
 
+        /// <summary>
+        /// 设备设备参数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_SetParameters_Click(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// 鼠标点击tree之后
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView_DeviceList_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Parent != null)
@@ -222,6 +265,11 @@ namespace DodemUdpServer
             }
         }
 
+        /// <summary>
+        /// 更新一次设备控件，发送设备心跳包数据来解析
+        /// </summary>
+        /// <param name="SelectDeviceName"></param>
+        /// <returns></returns>
         public int updateDeviceInfo(string SelectDeviceName)
         {
             int res = 0;
@@ -230,9 +278,14 @@ namespace DodemUdpServer
             return res;
         }
 
+        /// <summary>
+        /// 设备树木双击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView_DeviceList_DoubleClick(object sender, EventArgs e)
         {
-            
+
         }
 
         /// <summary>
@@ -243,6 +296,218 @@ namespace DodemUdpServer
         private void button_GetPassWord_Click(object sender, EventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// 设备设备主站信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_SetStation_Click(object sender, EventArgs e)
+        {
+            string strStationIpOld = this.textBox_StationIpOld.Text;
+            string strStationIpNew = this.textBox_StationIpNew.Text;
+            byte[] byteIpOld = new byte[4];
+            byte[] byteIpNew = new byte[4];
+
+            string strStationPortOld = this.textBox_StationPortOld.Text;
+            string strStationPortNew = this.textBox_StationPortNew.Text;
+            byte[] bytePortOld = new byte[2];
+            byte[] bytePortNew = new byte[2];
+
+            string strStationCardNumberOld = this.textBox_StationCardNumberOld.Text;
+            string strStationCardNumberNew = this.textBox_StationCardNumberNew.Text;
+            byte[] byteCardOld = new byte[6];
+            byte[] byteCardNew = new byte[6];
+
+            string strPassWord = this.textBox_DevicePassWord.Text;
+            byte[] orderByte = new byte[28];
+            byte[] bytePassWord = new byte[4];
+            if (SelectDeviceName != null)
+            {
+                if (strPassWord.Length == 4)
+                {
+                    bytePassWord = System.Text.Encoding.Default.GetBytes(strPassWord);
+                    string[] ipold = strStationIpOld.Split('.');
+                    string[] ipnew = strStationIpNew.Split('.');
+                    if(ipold.Length==4 && ipnew.Length==4)
+                    {
+                        byteIpOld = byteEnCodeIp(ipold);
+                        byteIpNew = byteEnCodeIp(ipnew);
+                    }
+                    else
+                    {
+                        MessageBox.Show("IP地址请正确填写");
+                        return;
+                    }
+                    if(IsNumeric(strStationPortOld) && IsNumeric(strStationPortNew))
+                    {
+                        int hPortOld = int.Parse(strStationPortOld)/255;
+                        int lPortOld = int.Parse(strStationPortOld)%255;
+                        bytePortOld[0] = (byte)hPortOld;
+                        bytePortOld[1] = (byte)lPortOld;
+
+                        int hPortNew = int.Parse(strStationPortNew) / 255;
+                        int lPortNew = int.Parse(strStationPortNew) % 255;
+                        bytePortNew[0] = (byte)hPortNew;
+                        bytePortNew[1] = (byte)lPortNew;
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("端口请正确填写");
+                        return;
+                    }
+                    if(IsHealthTel(strStationCardNumberOld)&& IsHealthTel(strStationCardNumberNew))
+                    {
+                        string tempStr;
+                        tempStr = strStationCardNumberOld.Substring(0, 1);
+                        byteCardOld[0] = (byte)(Convert.ToSByte(tempStr, 16) + 240);
+                        tempStr = strStationCardNumberNew.Substring(0, 1);
+                        byteCardNew[0] = (byte)(Convert.ToSByte(tempStr, 16) * 240);
+                        for (int i=0;i<5; i++)
+                        {
+                            tempStr = strStationCardNumberOld.Substring(1+i*2, 2);
+                            byteCardOld[i+1] = (byte)Convert.ToSByte(tempStr, 16);
+                            tempStr = strStationCardNumberNew.Substring(1 + i * 2, 2);
+                            byteCardNew[i + 1] = (byte)Convert.ToSByte(tempStr, 16);
+
+                        }
+                        
+                       
+                        //byteCardOld[i+1] = tempbyteCardOld[i];
+                        //byteCardNew[i+1] = tempbyteCardNew[i];
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("电话号码请正确填写");
+                        return;
+                    }
+                    orderByte[0] = bytePassWord[0];
+                    orderByte[1] = bytePassWord[1];
+                    orderByte[2] = bytePassWord[2];
+                    orderByte[3] = bytePassWord[3];
+
+                    orderByte[4] = byteIpOld[0];
+                    orderByte[5] = byteIpOld[1];
+                    orderByte[6] = byteIpOld[2];
+                    orderByte[7] = byteIpOld[3];
+
+                    orderByte[8] = bytePortOld[0];
+                    orderByte[9] = bytePortOld[1];
+                   
+                    orderByte[10] = byteIpNew[0];
+                    orderByte[11] = byteIpNew[1];
+                    orderByte[12] = byteIpNew[2];
+                    orderByte[13] = byteIpNew[3];
+
+                    orderByte[14] = bytePortNew[0];
+                    orderByte[15] = bytePortNew[1];
+                  
+                    orderByte[16] = byteCardOld[0];
+                    orderByte[17] = byteCardOld[1];
+                    orderByte[18] = byteCardOld[2];
+                    orderByte[19] = byteCardOld[3];
+                    orderByte[20] = byteCardOld[4];
+                    orderByte[21] = byteCardOld[5];
+
+                    orderByte[22] = byteCardNew[0];
+                    orderByte[23] = byteCardNew[1];
+                    orderByte[24] = byteCardNew[2];
+                    orderByte[25] = byteCardNew[3];
+                    orderByte[26] = byteCardNew[4];
+                    orderByte[27] = byteCardNew[5];
+
+                    mUDPServer.SendMessage_SetDeviceParameter(SelectDeviceName, orderByte);
+                }
+                else
+                {
+                    MessageBox.Show("密码框请填写完整");
+                    return;
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("没有选中设备");
+            }
+        }
+
+        /// <summary>
+        /// string 转化为四字节byte
+        /// </summary>
+        /// <param name="ips"></param>
+        /// <returns></returns>
+        public byte[] byteEnCodeIp(String[] ips)
+        {
+
+           // String[] ips = ip.Split('.');
+
+            byte[] ipbs = new byte[4];
+
+            //IP地址压缩成4字节,如果要进一步处理的话,就可以转换成一个int了. 
+
+            for (int i = 0; i < 4; i++)
+            {
+
+                int m = int.Parse(ips[i]);
+
+                byte b = (byte)m;
+
+                if (m > 127)
+                {
+
+                    b = (byte)(127 - m);
+
+                }
+
+                ipbs[i] = b;
+
+            }
+            return ipbs;
+        }
+
+        /// <summary>
+        /// 检查string是不是数字
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool IsNumeric(string value)
+        {
+            return Regex.IsMatch(value, @"^[+-]?\d*[.]?\d*$");
+        }
+
+        /// <summary>
+        /// string是否是个电话号码
+        /// </summary>
+        /// <param name="strInput"></param>
+        /// <returns></returns>
+        public static bool IsTel(string strInput)
+        {
+            return Regex.IsMatch(strInput, @"\d{3}-\d{8}|\d{4}-\d{7}");
+        }
+
+        /// <summary>
+        /// 判断string是不是电话格式
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsHealthTel(string str)
+        {
+            if(IsNumeric(str))
+            {
+                if (str.Length == 11)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

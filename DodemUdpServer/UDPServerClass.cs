@@ -33,6 +33,7 @@ namespace DodemUdpServer
         0 掉线
         1 开机
         2 校时
+        3 保活
              
         */
         public class ElecDevice{
@@ -41,6 +42,7 @@ namespace DodemUdpServer
             DateTime LastTime;
             IPEndPoint mIPEndPoint;
             byte[] LastMessage;
+            string DSVersion;
             int status;
 
             public void Init()
@@ -51,6 +53,11 @@ namespace DodemUdpServer
                 mIPEndPoint = new IPEndPoint(0, 666);
                 LastMessage = new byte[]{0};
                 status = 0;
+                DSVersion = "1.0";
+            }
+            public string GetVersion()
+            {
+                return DSVersion;
             }
             public DateTime GetLastTime()
             {
@@ -110,6 +117,10 @@ namespace DodemUdpServer
                 status = str;
             }
 
+            public void SetVersion(string str)
+            {
+                DSVersion = str;
+            }
         }
         List<ElecDevice> mDevice;
         public UDPServerClass()
@@ -314,6 +325,7 @@ namespace DodemUdpServer
                             {
                                 MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), refIPEndPoint, "应答指令:" + byteTOstring(Messages)));
                             }
+                            SetMessageDeviceStatus(Messages, 3);
                         }
                         break;
                     case 0x06:
@@ -629,6 +641,7 @@ namespace DodemUdpServer
         public void CheckDeviceList(byte[] Messages,IPEndPoint refIPEndPoint)
         {
             string Device_IMEI = getDeviceImei(Messages);
+            string dsVersion = Messages[10].ToString("X2") + "." + Messages[11].ToString("X2");
             for (int i = 0; i < mDevice.Count; i++)
             {
                  if(mDevice[i].GetDeviceIMEI() == Device_IMEI)
@@ -636,6 +649,8 @@ namespace DodemUdpServer
                     mDevice[i].SetIPEndPoint(refIPEndPoint);
                     mDevice[i].SetLastMessage(Messages);
                     mDevice[i].SetLastTime(DateTime.Now);
+                   
+                    mDevice[i].SetVersion(dsVersion);
                     return;
                  }
             }
@@ -645,6 +660,7 @@ namespace DodemUdpServer
             OneDevice.SetIPEndPoint(refIPEndPoint);
             OneDevice.SetLastMessage(Messages);
             OneDevice.SetStatus(0);
+            OneDevice.SetVersion(dsVersion);
             mDevice.Add(OneDevice);
            
         }
@@ -726,6 +742,7 @@ namespace DodemUdpServer
                 if (mDevice[i].GetDeviceIMEI() == getDeviceImei(Message))
                 {
                     mDevice[i].SetStatus(res);
+                    mDevice[i].SetLastMessage(Message);
                     
                     status = i;
                     return status;
@@ -818,6 +835,101 @@ namespace DodemUdpServer
             }
             return status;
            
+        }
+
+        public int SendMessage_SetDeviceParameter(string SelectDeviceName, byte[] strParameter)
+        {
+            int status = 0;
+            for (int i = 0; i < mDevice.Count; i++)
+            {
+                if (mDevice[i].GetDeviceIMEI() == SelectDeviceName && mDevice[i].GetStatus() > 0)
+                {
+                    //mDevice[i].SetStatus(res);
+                    byte[] DataLenth = new byte[2];
+                    DataLenth[0] = 0x00;
+                    DataLenth[0] = 0x1C;
+                    byte[] Messages = CreateSetDeviceByOrder(stringTObyte(SelectDeviceName), strParameter, 0x06, DataLenth);
+                    //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
+                    int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
+                    if (sendlenth == Messages.Length)
+                    {
+                        MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), mDevice[i].GetDeviceIPEndPoint(), "应答指令:" + byteTOstring(Messages)));
+                    }
+                    status = i;
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        public byte[] CreateSetDeviceParameter(byte[] DeviceIMEI, byte[] strParameter)
+        {
+            List<byte> byteSource = new List<byte>();
+
+            byteSource.Add(0x68);
+            byteSource.Add(DeviceIMEI[0]);
+            byteSource.Add(DeviceIMEI[1]);
+            byteSource.Add(DeviceIMEI[2]);
+            byteSource.Add(DeviceIMEI[3]);
+            byteSource.Add(DeviceIMEI[4]);
+            byteSource.Add(DeviceIMEI[5]);
+            byteSource.Add(0x06);
+            byteSource.Add(0x00);
+            byteSource.Add(0x1C);
+            //byte[] nowTime = BitConverter.GetBytes(DateTime.Now.);
+            byteSource.Add(strParameter[0]);
+            byteSource.Add(strParameter[1]);
+            byteSource.Add(strParameter[2]);
+            byteSource.Add(strParameter[3]);
+            byteSource.Add(strParameter[4]);
+            byteSource.Add(strParameter[5]);
+            byteSource.Add(strParameter[6]);
+            byteSource.Add(strParameter[7]);
+
+            int CheckByte = 0;
+            for (int i = 1; i < byteSource.Count; i++)
+            {
+                CheckByte += byteSource[i];
+            }
+            CheckByte = 255 - CheckByte % 256;
+
+            byteSource.Add((byte)(CheckByte));
+            byteSource.Add(0x16);
+            byte[] PassWordOrder = byteSource.ToArray();
+            return PassWordOrder;
+        }
+
+        public byte[] CreateSetDeviceByOrder(byte[] DeviceIMEI, byte[] strParameter,byte Order, byte[]DataLenth)
+        {
+            List<byte> byteSource = new List<byte>();
+            int i = 0;
+            byteSource.Add(0x68);
+            byteSource.Add(DeviceIMEI[0]);
+            byteSource.Add(DeviceIMEI[1]);
+            byteSource.Add(DeviceIMEI[2]);
+            byteSource.Add(DeviceIMEI[3]);
+            byteSource.Add(DeviceIMEI[4]);
+            byteSource.Add(DeviceIMEI[5]);
+            byteSource.Add(Order);
+            byteSource.Add(DataLenth[0]);
+            byteSource.Add(DataLenth[1]);
+            for(i = 0; i< strParameter.Length; i++)
+            {
+                byteSource.Add(strParameter[i]);
+            }
+           
+
+            int CheckByte = 0;
+            for (i = 1; i < byteSource.Count; i++)
+            {
+                CheckByte += byteSource[i];
+            }
+            CheckByte = 255 - CheckByte % 256;
+
+            byteSource.Add((byte)(CheckByte));
+            byteSource.Add(0x16);
+            byte[] PassWordOrder = byteSource.ToArray();
+            return PassWordOrder;
         }
     }
 }
