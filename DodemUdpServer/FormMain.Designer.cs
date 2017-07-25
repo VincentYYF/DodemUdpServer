@@ -96,6 +96,19 @@
             this.button_DeviceReset = new System.Windows.Forms.Button();
             this.textBox_ResetPassWord = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
+            this.button_WeekUp = new System.Windows.Forms.Button();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.button_CheckDeviceParameters = new System.Windows.Forms.Button();
+            this.comboBox_Function = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.textBox_OrderNumber = new System.Windows.Forms.TextBox();
+            this.button_SetDeviceFunction = new System.Windows.Forms.Button();
+            this.button_CheckDeviceTime = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.button_UpLoadHistory = new System.Windows.Forms.Button();
+            this.button_UpLoadNow = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -110,6 +123,9 @@
             this.groupBox8.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.groupBox11.SuspendLayout();
             this.SuspendLayout();
             // 
             // button_CreatServer
@@ -268,7 +284,7 @@
             // 
             // button_SetParameters
             // 
-            this.button_SetParameters.Location = new System.Drawing.Point(363, 145);
+            this.button_SetParameters.Location = new System.Drawing.Point(263, 145);
             this.button_SetParameters.Name = "button_SetParameters";
             this.button_SetParameters.Size = new System.Drawing.Size(75, 23);
             this.button_SetParameters.TabIndex = 1;
@@ -671,6 +687,7 @@
             this.tabControl_Basic.Controls.Add(this.tabPage2);
             this.tabControl_Basic.Controls.Add(this.tabPage3);
             this.tabControl_Basic.Controls.Add(this.tabPage4);
+            this.tabControl_Basic.Controls.Add(this.tabPage5);
             this.tabControl_Basic.Location = new System.Drawing.Point(6, 17);
             this.tabControl_Basic.Name = "tabControl_Basic";
             this.tabControl_Basic.SelectedIndex = 0;
@@ -722,6 +739,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.groupBox10);
             this.tabPage4.Controls.Add(this.groupBox9);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -733,15 +751,16 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.button_WeekUp);
             this.groupBox9.Controls.Add(this.textBox_ResetPassWord);
             this.groupBox9.Controls.Add(this.label21);
             this.groupBox9.Controls.Add(this.button_DeviceReset);
             this.groupBox9.Location = new System.Drawing.Point(6, 6);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(444, 181);
+            this.groupBox9.Size = new System.Drawing.Size(444, 77);
             this.groupBox9.TabIndex = 0;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "指令";
+            this.groupBox9.Text = "带参数指令";
             // 
             // button_DeviceReset
             // 
@@ -769,6 +788,138 @@
             this.label21.Size = new System.Drawing.Size(53, 12);
             this.label21.TabIndex = 14;
             this.label21.Text = "设备密码";
+            // 
+            // button_WeekUp
+            // 
+            this.button_WeekUp.Location = new System.Drawing.Point(212, 45);
+            this.button_WeekUp.Name = "button_WeekUp";
+            this.button_WeekUp.Size = new System.Drawing.Size(75, 23);
+            this.button_WeekUp.TabIndex = 16;
+            this.button_WeekUp.Text = "短信唤醒";
+            this.button_WeekUp.UseVisualStyleBackColor = true;
+            this.button_WeekUp.Click += new System.EventHandler(this.button_WeekUp_Click);
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.button_CheckDeviceTime);
+            this.groupBox10.Controls.Add(this.button_SetDeviceFunction);
+            this.groupBox10.Controls.Add(this.textBox_OrderNumber);
+            this.groupBox10.Controls.Add(this.label23);
+            this.groupBox10.Controls.Add(this.label22);
+            this.groupBox10.Controls.Add(this.comboBox_Function);
+            this.groupBox10.Controls.Add(this.button_CheckDeviceParameters);
+            this.groupBox10.Location = new System.Drawing.Point(6, 90);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(444, 97);
+            this.groupBox10.TabIndex = 1;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "无参数指令";
+            // 
+            // button_CheckDeviceParameters
+            // 
+            this.button_CheckDeviceParameters.Location = new System.Drawing.Point(363, 66);
+            this.button_CheckDeviceParameters.Name = "button_CheckDeviceParameters";
+            this.button_CheckDeviceParameters.Size = new System.Drawing.Size(75, 23);
+            this.button_CheckDeviceParameters.TabIndex = 0;
+            this.button_CheckDeviceParameters.Text = "查询配置";
+            this.button_CheckDeviceParameters.UseVisualStyleBackColor = true;
+            this.button_CheckDeviceParameters.Click += new System.EventHandler(this.button_CheckDeviceParameters_Click);
+            // 
+            // comboBox_Function
+            // 
+            this.comboBox_Function.FormattingEnabled = true;
+            this.comboBox_Function.Location = new System.Drawing.Point(87, 20);
+            this.comboBox_Function.Name = "comboBox_Function";
+            this.comboBox_Function.Size = new System.Drawing.Size(200, 20);
+            this.comboBox_Function.TabIndex = 1;
+            this.comboBox_Function.SelectedIndexChanged += new System.EventHandler(this.comboBox_Function_SelectedIndexChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(23, 26);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(53, 12);
+            this.label22.TabIndex = 2;
+            this.label22.Text = "功能配置";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(29, 51);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(41, 12);
+            this.label23.TabIndex = 3;
+            this.label23.Text = "命令字";
+            // 
+            // textBox_OrderNumber
+            // 
+            this.textBox_OrderNumber.Location = new System.Drawing.Point(87, 47);
+            this.textBox_OrderNumber.Name = "textBox_OrderNumber";
+            this.textBox_OrderNumber.Size = new System.Drawing.Size(100, 21);
+            this.textBox_OrderNumber.TabIndex = 4;
+            // 
+            // button_SetDeviceFunction
+            // 
+            this.button_SetDeviceFunction.Location = new System.Drawing.Point(212, 47);
+            this.button_SetDeviceFunction.Name = "button_SetDeviceFunction";
+            this.button_SetDeviceFunction.Size = new System.Drawing.Size(75, 23);
+            this.button_SetDeviceFunction.TabIndex = 5;
+            this.button_SetDeviceFunction.Text = "功能配置";
+            this.button_SetDeviceFunction.UseVisualStyleBackColor = true;
+            this.button_SetDeviceFunction.Click += new System.EventHandler(this.button_SetDeviceFunction_Click);
+            // 
+            // button_CheckDeviceTime
+            // 
+            this.button_CheckDeviceTime.Location = new System.Drawing.Point(363, 22);
+            this.button_CheckDeviceTime.Name = "button_CheckDeviceTime";
+            this.button_CheckDeviceTime.Size = new System.Drawing.Size(75, 23);
+            this.button_CheckDeviceTime.TabIndex = 6;
+            this.button_CheckDeviceTime.Text = "查询时间";
+            this.button_CheckDeviceTime.UseVisualStyleBackColor = true;
+            this.button_CheckDeviceTime.Click += new System.EventHandler(this.button_CheckDeviceTime_Click);
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.groupBox11);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(456, 193);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "请求数据";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.button_UpLoadNow);
+            this.groupBox11.Controls.Add(this.button_UpLoadHistory);
+            this.groupBox11.Location = new System.Drawing.Point(6, 6);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(444, 187);
+            this.groupBox11.TabIndex = 0;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "请求";
+            // 
+            // button_UpLoadHistory
+            // 
+            this.button_UpLoadHistory.Location = new System.Drawing.Point(363, 18);
+            this.button_UpLoadHistory.Name = "button_UpLoadHistory";
+            this.button_UpLoadHistory.Size = new System.Drawing.Size(75, 23);
+            this.button_UpLoadHistory.TabIndex = 0;
+            this.button_UpLoadHistory.Text = "上床历史";
+            this.button_UpLoadHistory.UseVisualStyleBackColor = true;
+            this.button_UpLoadHistory.Click += new System.EventHandler(this.button_UpLoadHistory_Click);
+            // 
+            // button_UpLoadNow
+            // 
+            this.button_UpLoadNow.Location = new System.Drawing.Point(363, 47);
+            this.button_UpLoadNow.Name = "button_UpLoadNow";
+            this.button_UpLoadNow.Size = new System.Drawing.Size(75, 23);
+            this.button_UpLoadNow.TabIndex = 1;
+            this.button_UpLoadNow.Text = "立即上传";
+            this.button_UpLoadNow.UseVisualStyleBackColor = true;
+            this.button_UpLoadNow.Click += new System.EventHandler(this.button_UpLoadNow_Click);
             // 
             // Form_Main
             // 
@@ -804,6 +955,10 @@
             this.tabPage4.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -878,6 +1033,19 @@
         private System.Windows.Forms.Button button_DeviceReset;
         private System.Windows.Forms.TextBox textBox_ResetPassWord;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Button button_WeekUp;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.Button button_CheckDeviceParameters;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox comboBox_Function;
+        private System.Windows.Forms.TextBox textBox_OrderNumber;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Button button_SetDeviceFunction;
+        private System.Windows.Forms.Button button_CheckDeviceTime;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.Button button_UpLoadNow;
+        private System.Windows.Forms.Button button_UpLoadHistory;
     }
 }
 

@@ -33,6 +33,7 @@ namespace DodemUdpServer
         UDPServerClass mUDPServer;
 
         string SelectDeviceName;
+        byte SelectDeviceFunction;
         public Form_Main()
         {
             InitializeComponent();
@@ -123,6 +124,7 @@ namespace DodemUdpServer
         {
             InitLocalIpStatus();
             InitDeviceTree();
+            InitDeviceFunction();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -131,6 +133,9 @@ namespace DodemUdpServer
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// 设备树初始化，从SQL中获取设备种类
+        /// </summary>
         public void InitDeviceTree()
         {
             //             this.treeView_DeviceList.SelectedNode.ForeColor = Color.Black;
@@ -148,6 +153,35 @@ namespace DodemUdpServer
             this.treeView_DeviceList.Nodes.Add(tc_origine);
         }
 
+        /// <summary>
+        /// 初始化设备功能列表
+        /// </summary>
+        public void InitDeviceFunction()
+        {
+            this.comboBox_Function.Items.Add("导地线拉力及倾角监测功能");
+            this.comboBox_Function.Items.Add("绝缘子泄漏电流监测功能");
+            this.comboBox_Function.Items.Add("气象数据监测功能");
+            this.comboBox_Function.Items.Add("导线温度、电流数据监测功能");
+            this.comboBox_Function.Items.Add("杆塔振动数据监测功能");
+            this.comboBox_Function.Items.Add("导线侧倾角监测功能");
+            this.comboBox_Function.Items.Add("舞动振幅频率监测功能");
+            this.comboBox_Function.Items.Add("导线微风震动数据监测功能");
+            this.comboBox_Function.Items.Add("综合防盗功能");
+            this.comboBox_Function.Items.Add("山火报警功能");
+            this.comboBox_Function.Items.Add("大风舞动报警功能");
+            this.comboBox_Function.Items.Add("设备故障自检功能");
+            this.comboBox_Function.Items.Add("微风振动动态数据监测功能");
+            this.comboBox_Function.Items.Add("舞动动态数据监测功能");
+            this.comboBox_Function.Items.Add("污秽数据监测功能");
+            this.comboBox_Function.Items.Add("导线弧垂数据监测功能");
+            this.comboBox_Function.Items.Add("电缆温度数据监测功能");
+            this.comboBox_Function.Items.Add("电缆护层接地电流数据监测功能");
+            this.comboBox_Function.Items.Add("故障定位数据监测功能");
+            this.comboBox_Function.Items.Add("电缆局放数据监测功能");
+            this.comboBox_Function.Items.Add("文件传输功能");
+            this.comboBox_Function.Items.Add("图像监测功能");
+            this.comboBox_Function.SelectedIndex = 0;
+        }
         public DataSet getDataSet(string tableName)
         {
             DataSet ds = new DataSet();
@@ -531,6 +565,250 @@ namespace DodemUdpServer
                     MessageBox.Show("请填对设备密码");
                 }
                     
+            }
+            else
+            {
+                MessageBox.Show("没有选中设备");
+            }
+        }
+
+        /// <summary>
+        /// 短信唤醒
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_WeekUp_Click(object sender, EventArgs e)
+        {
+            string strPassWord = this.textBox_DevicePassWord.Text;
+            byte[] orderByte = new byte[4];
+            if (SelectDeviceName != null)
+            {
+                if (strPassWord.Length == 4)
+                {
+                    orderByte = System.Text.Encoding.Default.GetBytes(strPassWord);
+                    mUDPServer.SendMessage_SetDeviceWeekUp(SelectDeviceName, orderByte);
+                }
+                else
+                {
+                    MessageBox.Show("请填对设备密码");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("没有选中设备");
+            }
+        }
+
+        /// <summary>
+        /// 查询设备参数配置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_CheckDeviceParameters_Click(object sender, EventArgs e)
+        {
+            if (SelectDeviceName != null)
+            {
+                mUDPServer.SendMessage_GetDeviceInfo(SelectDeviceName);
+            }
+            else
+            {
+                MessageBox.Show("没有选中设备");
+            }
+        }
+
+        /// <summary>
+        /// 设备功能选择
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBox_Function_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //MessageBox.Show(comboBox_Function.SelectedIndex.ToString());
+            string SelectValue = comboBox_Function.Text;
+            switch(SelectValue)
+            {
+                case "导地线拉力及倾角监测功能":
+                    this.textBox_OrderNumber.Text = "0x22";
+                    SelectDeviceFunction = 0x22;
+                    break;
+                case "绝缘子泄漏电流监测功能":
+                    this.textBox_OrderNumber.Text = "0x24";
+                    SelectDeviceFunction = 0x24;
+                    break;
+                case "气象数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x25";
+                    SelectDeviceFunction = 0x25;
+                    break;
+                case "导线温度、电流数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x26";
+                    SelectDeviceFunction = 0x26;
+                    break;
+                case "杆塔振动数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x27";
+                    SelectDeviceFunction = 0x27;
+                    break;
+                case "导线侧倾角监测功能":
+                    this.textBox_OrderNumber.Text = "0x28";
+                    SelectDeviceFunction = 0x28;
+                    break;
+                case "舞动振幅频率监测功能":
+                    this.textBox_OrderNumber.Text = "0x29";
+                    SelectDeviceFunction = 0x29;
+                    break;
+                case "杆塔倾斜数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x2A";
+                    SelectDeviceFunction = 0x2A;
+                    break;
+                case "导线微风震动数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x2B";
+                    SelectDeviceFunction = 0x2B;
+                    break;
+                case "综合防盗功能":
+                    this.textBox_OrderNumber.Text = "0x2C";
+                    SelectDeviceFunction = 0x2C;
+                    break;
+                case "山火报警功能":
+                    this.textBox_OrderNumber.Text = "0x2D";
+                    SelectDeviceFunction = 0x2D;
+                    break;
+                case "大风舞动报警功能":
+                    this.textBox_OrderNumber.Text = "0x2E";
+                    SelectDeviceFunction = 0x2E;
+                    break;
+                case "设备故障自检功能":
+                    this.textBox_OrderNumber.Text = "0x30";
+                    SelectDeviceFunction = 0x30;
+                    break;
+                case "微风振动动态数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x32";
+                    SelectDeviceFunction = 0x32;
+                    break;
+                case "舞动动态数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x36";
+                    SelectDeviceFunction = 0x36;
+                    break;
+                case "污秽数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x41";
+                    SelectDeviceFunction = 0x41;
+                    break;
+                case "导线弧垂数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x42";
+                    SelectDeviceFunction = 0x42;
+                    break;
+                case "电缆温度数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x43";
+                    SelectDeviceFunction = 0x43;
+                    break;
+                case "电缆护层接地电流数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x44";
+                    SelectDeviceFunction = 0x44;
+                    break;
+                case "故障定位数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x45";
+                    SelectDeviceFunction = 0x45;
+                    break;
+                case "电缆局放数据监测功能":
+                    this.textBox_OrderNumber.Text = "0x46";
+                    SelectDeviceFunction = 0x46;
+                    break;
+                case "文件传输功能":
+                    this.textBox_OrderNumber.Text = "0x73";
+                    SelectDeviceFunction = 0x73;
+                    break;
+                case "图像监测功能":
+                    this.textBox_OrderNumber.Text = "0x84";
+                    SelectDeviceFunction = 0x84;
+                    break;
+
+            }
+        }
+
+        /// <summary>
+        /// 设置设备功能 0x0B
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_SetDeviceFunction_Click(object sender, EventArgs e)
+        {
+            string strPassWord = this.textBox_ResetPassWord.Text;
+            byte[] bytePassWord = new byte[4];
+            byte[] orderByte = new byte[5];
+            orderByte[4] = SelectDeviceFunction;
+            if (SelectDeviceName != null)
+            {
+                if(strPassWord.Length==4)
+                {
+                    bytePassWord = System.Text.Encoding.Default.GetBytes(strPassWord);
+                    orderByte[0] = bytePassWord[0];
+                    orderByte[1] = bytePassWord[1];
+                    orderByte[2] = bytePassWord[2];
+                    orderByte[3] = bytePassWord[3];
+
+                    mUDPServer.SendMessage_SetDeviceFunction(SelectDeviceName, orderByte);
+                }
+                else
+                {
+                    MessageBox.Show("请正确填好设备密码");
+                }
+               
+            }
+            else
+            {
+                MessageBox.Show("没有选中设备");
+            }
+        }
+
+        /// <summary>
+        /// 查询设备时间 0x0D
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_CheckDeviceTime_Click(object sender, EventArgs e)
+        {
+            if (SelectDeviceName != null)
+            {
+                mUDPServer.SendMessage_GetDeviceTime(SelectDeviceName);
+            }
+            else
+            {
+                MessageBox.Show("没有选中设备");
+            }
+        }
+
+        /// <summary>
+        /// 上传历史数据 0x21
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_UpLoadHistory_Click(object sender, EventArgs e)
+        {
+            if (SelectDeviceName != null)
+            {
+                mUDPServer.SendMessage_GetDeviceHistoryData(SelectDeviceName);
+            }
+            else
+            {
+                MessageBox.Show("没有选中设备");
+            }
+        }
+
+        /// <summary>
+        /// 上传最新数据 0x21 0xBBBB
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_UpLoadNow_Click(object sender, EventArgs e)
+        {
+           
+            byte[] orderByte = new byte[2];
+          
+            if (SelectDeviceName != null)
+            {
+                orderByte[0] = 0xBB;
+                orderByte[1] = 0xBB;
+                mUDPServer.SendMessage_GetDeviceNowData(SelectDeviceName, orderByte);
+
             }
             else
             {

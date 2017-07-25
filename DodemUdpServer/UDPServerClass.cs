@@ -916,6 +916,14 @@ namespace DodemUdpServer
             return PassWordOrder;
         }
 
+        /// <summary>
+        /// 创建设备指令
+        /// </summary>
+        /// <param name="DeviceIMEI"></param>
+        /// <param name="strParameter"></param>
+        /// <param name="Order"></param>
+        /// <param name="DataLenth"></param>
+        /// <returns></returns>
         public byte[] CreateSetDeviceByOrder(byte[] DeviceIMEI, byte[] strParameter,byte Order, byte[]DataLenth)
         {
             List<byte> byteSource = new List<byte>();
@@ -930,11 +938,13 @@ namespace DodemUdpServer
             byteSource.Add(Order);
             byteSource.Add(DataLenth[0]);
             byteSource.Add(DataLenth[1]);
-            for(i = 0; i< strParameter.Length; i++)
+            if(strParameter!=null)
             {
-                byteSource.Add(strParameter[i]);
+                for (i = 0; i < strParameter.Length; i++)
+                {
+                    byteSource.Add(strParameter[i]);
+                }
             }
-           
 
             int CheckByte = 0;
             for (i = 1; i < byteSource.Count; i++)
@@ -978,5 +988,178 @@ namespace DodemUdpServer
             }
             return status;
         }
+
+        /// <summary>
+        /// 唤醒设备
+        /// </summary>
+        /// <param name="SelectDeviceName"></param>
+        /// <param name="strParameter"></param>
+        /// <returns></returns>
+        public int SendMessage_SetDeviceWeekUp(string SelectDeviceName, byte[] strParameter)
+        {
+            int status = 0;
+            for (int i = 0; i < mDevice.Count; i++)
+            {
+                if (mDevice[i].GetDeviceIMEI() == SelectDeviceName && mDevice[i].GetStatus() > 0)
+                {
+                    //mDevice[i].SetStatus(res);
+                    byte[] DataLenth = new byte[2];
+                    DataLenth[0] = 0x00;
+                    DataLenth[1] = 0x04;
+                    byte[] Messages = CreateSetDeviceByOrder(stringTObyte(SelectDeviceName), strParameter, 0x09, DataLenth);
+                    //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
+                    int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
+                    if (sendlenth == Messages.Length)
+                    {
+                        MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), mDevice[i].GetDeviceIPEndPoint(), "应答指令:" + byteTOstring(Messages)));
+                    }
+                    status = i;
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        /// <summary>
+        /// 查询设备配置
+        /// </summary>
+        /// <param name="SelectDeviceName"></param>
+        /// <returns></returns>
+        public int SendMessage_GetDeviceInfo(string SelectDeviceName)
+        {
+            int status = 0;
+            for (int i = 0; i < mDevice.Count; i++)
+            {
+                if (mDevice[i].GetDeviceIMEI() == SelectDeviceName && mDevice[i].GetStatus() > 0)
+                {
+                    //mDevice[i].SetStatus(res);
+                    byte[] DataLenth = new byte[2];
+                    DataLenth[0] = 0x00;
+                    DataLenth[1] = 0x00;
+                    byte[] Messages = CreateSetDeviceByOrder(stringTObyte(SelectDeviceName), null, 0x0A, DataLenth);
+                    //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
+                    int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
+                    if (sendlenth == Messages.Length)
+                    {
+                        MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), mDevice[i].GetDeviceIPEndPoint(), "应答指令:" + byteTOstring(Messages)));
+                    }
+                    status = i;
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        /// <summary>
+        /// 设置设备功能
+        /// </summary>
+        /// <param name="SelectDeviceName"></param>
+        /// <param name="strParameter"></param>
+        /// <returns></returns>
+        public int SendMessage_SetDeviceFunction(string SelectDeviceName, byte[] strParameter)
+        {
+            int status = 0;
+            for (int i = 0; i < mDevice.Count; i++)
+            {
+                if (mDevice[i].GetDeviceIMEI() == SelectDeviceName && mDevice[i].GetStatus() > 0)
+                {
+                    //mDevice[i].SetStatus(res);
+                    byte[] DataLenth = new byte[2];
+                    DataLenth[0] = 0x00;
+                    DataLenth[1] = 0x05;
+                    byte[] Messages = CreateSetDeviceByOrder(stringTObyte(SelectDeviceName), strParameter, 0x0B, DataLenth);
+                    //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
+                    int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
+                    if (sendlenth == Messages.Length)
+                    {
+                        MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), mDevice[i].GetDeviceIPEndPoint(), "应答指令:" + byteTOstring(Messages)));
+                    }
+                    status = i;
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        /// <summary>
+        /// 查询设备时间
+        /// </summary>
+        /// <param name="SelectDeviceName"></param>
+        /// <returns></returns>
+        public int SendMessage_GetDeviceTime(string SelectDeviceName)
+        {
+            int status = 0;
+            for (int i = 0; i < mDevice.Count; i++)
+            {
+                if (mDevice[i].GetDeviceIMEI() == SelectDeviceName && mDevice[i].GetStatus() > 0)
+                {
+                    //mDevice[i].SetStatus(res);
+                    byte[] DataLenth = new byte[2];
+                    DataLenth[0] = 0x00;
+                    DataLenth[1] = 0x00;
+                    byte[] Messages = CreateSetDeviceByOrder(stringTObyte(SelectDeviceName), null, 0x0D, DataLenth);
+                    //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
+                    int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
+                    if (sendlenth == Messages.Length)
+                    {
+                        MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), mDevice[i].GetDeviceIPEndPoint(), "应答指令:" + byteTOstring(Messages)));
+                    }
+                    status = i;
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        public int SendMessage_GetDeviceHistoryData(string SelectDeviceName)
+        {
+            int status = 0;
+            for (int i = 0; i < mDevice.Count; i++)
+            {
+                if (mDevice[i].GetDeviceIMEI() == SelectDeviceName && mDevice[i].GetStatus() > 0)
+                {
+                    //mDevice[i].SetStatus(res);
+                    byte[] DataLenth = new byte[2];
+                    DataLenth[0] = 0x00;
+                    DataLenth[1] = 0x02;
+                    byte[] Messages = CreateSetDeviceByOrder(stringTObyte(SelectDeviceName), null, 0x21, DataLenth);
+                    //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
+                    int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
+                    if (sendlenth == Messages.Length)
+                    {
+                        MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), mDevice[i].GetDeviceIPEndPoint(), "应答指令:" + byteTOstring(Messages)));
+                    }
+                    status = i;
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        public int SendMessage_GetDeviceNowData(string SelectDeviceName, byte[] strParameter)
+        {
+            int status = 0;
+            for (int i = 0; i < mDevice.Count; i++)
+            {
+                if (mDevice[i].GetDeviceIMEI() == SelectDeviceName && mDevice[i].GetStatus() > 0)
+                {
+                    //mDevice[i].SetStatus(res);
+                    byte[] DataLenth = new byte[2];
+                    DataLenth[0] = 0x00;
+                    DataLenth[1] = 0x02;
+                    byte[] Messages = CreateSetDeviceByOrder(stringTObyte(SelectDeviceName), strParameter, 0x21, DataLenth);
+                    //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
+                    int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
+                    if (sendlenth == Messages.Length)
+                    {
+                        MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), mDevice[i].GetDeviceIPEndPoint(), "应答指令:" + byteTOstring(Messages)));
+                    }
+                    status = i;
+                    return status;
+                }
+            }
+            return status;
+        }
+
     }
 }
