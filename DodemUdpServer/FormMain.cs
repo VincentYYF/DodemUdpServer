@@ -419,7 +419,7 @@ namespace DodemUdpServer
                     orderByte[26] = byteCardNew[4];
                     orderByte[27] = byteCardNew[5];
 
-                    mUDPServer.SendMessage_SetDeviceParameter(SelectDeviceName, orderByte);
+                    mUDPServer.SendMessage_SetDeviceStationParameter(SelectDeviceName, orderByte);
                 }
                 else
                 {
@@ -507,6 +507,34 @@ namespace DodemUdpServer
             else
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// 重置设备
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_DeviceReset_Click(object sender, EventArgs e)
+        {
+            string strPassWord = this.textBox_DevicePassWord.Text;
+            byte[] orderByte = new byte[4];
+            if (SelectDeviceName != null)
+            {
+                if(strPassWord.Length==4)
+                {
+                    orderByte = System.Text.Encoding.Default.GetBytes(strPassWord);
+                    mUDPServer.SendMessage_SetDeviceReset(SelectDeviceName, orderByte);
+                }
+                else
+                {
+                    MessageBox.Show("请填对设备密码");
+                }
+                    
+            }
+            else
+            {
+                MessageBox.Show("没有选中设备");
             }
         }
     }
