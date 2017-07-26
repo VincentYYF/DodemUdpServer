@@ -27,6 +27,113 @@ namespace DodemUdpServer
         public event DeviceMessageHandler MessageDeviceOnline;
         public event DeviceMessageHandler MessageDeviceOffline;
         
+        public class DevicePicture
+        {
+            string DeviceIMEI;
+            int TotalPackNum;
+            string PictureName;
+            string PictureTime;
+            string DeviceChannel;
+            string DevicePreform;//预制位
+            List<byte[]> picData = new List<byte[]>();
+            bool CompleteTransData;
+
+            public void Init(int num)
+            {
+                DeviceIMEI = "";
+                TotalPackNum =0;
+                PictureName = "";
+                PictureTime = DateTime.Now.ToString("yyyymmddhhmmss");
+                DeviceChannel = "1";
+                DevicePreform = "0";
+                CompleteTransData = false;
+                picData.Clear();
+                for(int i=0; i<num; i++)
+                {
+                    byte[] tempdata = new byte[1];
+                    tempdata[0] = 0x1A;
+                    picData.Add(tempdata);
+                }
+            }
+
+            public string GetDeviceIMEI()
+            {
+                return DeviceIMEI;
+            }
+            public byte[] CheckMissPackages()
+            {
+                List<byte> byteSource = new List<byte>();
+                for(int i=0; i<picData.Count; i++)
+                {
+                    if (picData[i].Length == 1 && picData[i][0] == 0x1D)
+                        byteSource.Add((byte)(i+1));//需要增加1 数据包是从1开始计算的
+                }
+                byte[] packByte = byteSource.ToArray();
+                return packByte;
+            }
+            public bool GetCompleteTransData()
+            {
+                return CompleteTransData;
+            }
+            public int GetPackageNum()
+            {
+                return TotalPackNum;
+            }
+            public string GetPictureName()
+            {
+                return PictureName;
+            }
+            public string GetPictureTime()
+            {
+                return PictureTime;
+            }
+            public string GetDeviceChannel()
+            {
+                return DeviceChannel;
+            }
+
+            public string GetDevicePreform()
+            {
+                return DevicePreform;
+            }
+
+            public void SetPackageNum(int str)
+            {
+                TotalPackNum = str;
+            }
+            public void SetPictureName(string str)
+            {
+                PictureName = str;
+            }
+            public void SetPictureTime(string str)
+            {
+                PictureTime = str;
+            }
+            public void SetDeviceChannel(string str)
+            {
+                DeviceChannel = str;
+            }
+
+            public void SetDevicePreform(string str)
+            {
+                DevicePreform = str;
+            }
+
+            public void SetCompleteTransData(bool str)
+            {
+                CompleteTransData = str;
+            }
+
+            public void SetDeviceIMEI(string str)
+            {
+                DeviceIMEI = str;
+            }
+
+            public void AddDataToList(byte[] str, int packagesNum)
+            {
+                picData[packagesNum] = str;
+            }
+        }
 
         /*
         Status状态
@@ -123,10 +230,12 @@ namespace DodemUdpServer
             }
         }
         List<ElecDevice> mDevice;
+        List<DevicePicture> mDevicePicture;
         public UDPServerClass()
         {
             //获取本机可用IP地址  
             mDevice = new List<ElecDevice>();
+            mDevicePicture = new List<DevicePicture>();
             thread_Flag = true;
             IPAddress[] ips = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
             foreach (IPAddress ipa in ips)
@@ -491,16 +600,29 @@ namespace DodemUdpServer
                         MessageArrived(string.Format("拍照时间表设置"));
                         break;
                     case 0x83:
-                        MessageArrived(string.Format("主站请求拍摄照片"));
+                        MessageArrived(string.Format("设备应答主站请求拍摄照片"));
                         break;
                     case 0x84:
                         MessageArrived(string.Format("采集终端请求上传照片"));
+                        /*数据需要原始返回给设备说明准备好了*/
+                        sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, refIPEndPoint);
+                        if (sendlenth == Messages.Length)
+                        {
+                            MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), refIPEndPoint, "应答指令:" + byteTOstring(Messages)));
+                        }
+                        /*开始接收图片*/
+                        /*解析总包数*/
+                        DealNewPictureTrans(Messages);
                         break;
                     case 0x85:
                         MessageArrived(string.Format("上传图像数据"));
+                        //把数据包组装到内存数组
+                        AddPackDataToListData(Messages);
                         break;
                     case 0x86:
                         MessageArrived(string.Format("图像数据上传结束标记"));
+                        /*结束后统计数据包，补发数据*/
+                        CheakListData(Messages);
                         break;
                     case 0x87:
                         MessageArrived(string.Format("下发补包数据"));
@@ -522,7 +644,99 @@ namespace DodemUdpServer
                 MessageArrived(string.Format("{0}来自{1}:{2}{3}", DateTime.Now.ToString(), refIPEndPoint, "设备指令:"+byteTOstring(Messages), "命令格式错误"));
             }
         }
+        /// <summary>
+        /// 检查内存中图片结构体正常否
+        /// </summary>
+        /// <param name="Messages"></param>
+        /// <returns></returns>
+        public int DealNewPictureTrans(byte[] Messages)
+        {
+            int status = 0;
+            string Device_IMEI = getDeviceImei(Messages);
+            
+            for (int i = 0; i < mDevicePicture.Count; i++)
+            {
+                if (mDevicePicture[i].GetDeviceIMEI() == Device_IMEI)
+                {       
+                    mDevicePicture[i].Init(getPictureTotalPackageNum(Messages));
+                    return i;
+                }
+            }
+            DevicePicture OnePicture = new DevicePicture(); ;
+            OnePicture.Init(getPictureTotalPackageNum(Messages));
+            OnePicture.SetDeviceIMEI(Device_IMEI);
+            mDevicePicture.Add(OnePicture);
+            return status;
+        }
+        /// <summary>
+        /// 获取当前图片总包数
+        /// </summary>
+        /// <param name="Messages"></param>
+        /// <returns></returns>
+        public int getPictureTotalPackageNum(byte[] Messages)
+        {
+            byte HPackages = Messages[18];
+            byte LPackages = Messages[19];
+            int TotalNum = HPackages + LPackages;
+            return (TotalNum);
+        }
+        /// <summary>
+        /// 把数据包添加至内存中
+        /// </summary>
+        /// <param name="Messages"></param>
+        /// <returns></returns>
+        public int AddPackDataToListData(byte[] Messages)
+        {
+            int status = 0;
+            string Device_IMEI = getDeviceImei(Messages);
 
+            for (int i = 0; i < mDevicePicture.Count; i++)
+            {
+                if (mDevicePicture[i].GetDeviceIMEI() == Device_IMEI)
+                {
+                    int nowPackageNum = Messages[12] + Messages[13] - 1;//减去1 因为内存是从0开始的
+                    int nowPackageLenth = Messages[8]*256 + Messages[9];
+                    byte[] addBuff = Messages.Skip(13).Take(nowPackageLenth).ToArray();
+                    mDevicePicture[i].AddDataToList(addBuff,nowPackageNum);
+                    return i;
+                }
+            }
+            return status;
+        }
+
+        public int CheakListData(byte[] Messages)
+        {
+            int status = 0;
+            string Device_IMEI = getDeviceImei(Messages);
+
+            for (int i = 0; i < mDevicePicture.Count; i++)
+            {
+                if (mDevicePicture[i].GetDeviceIMEI() == Device_IMEI)
+                {
+                   
+                    byte[] MissPackages = mDevicePicture[i].CheckMissPackages();
+                    if(MissPackages.Length==0)
+                    {
+                        byte[] orderByte = new byte[MissPackages.Length + 3];
+                        orderByte[0] = 0x01;
+                        orderByte[1] = 0x00;
+                        orderByte[2] = (byte)MissPackages.Length;
+                        for (int j = 0; j < MissPackages.Length; j++)
+                        {
+                            orderByte[j + 3] = MissPackages[j];
+                        }
+                        SendMessage_GetMissPicturePackages(Device_IMEI, MissPackages);
+                    }
+                    else
+                    {
+                        Console.WriteLine("组装数据");
+                    }
+                    
+                    return i;
+                }
+            }
+            return status;
+        }
         /// <summary>
         /// byte[]转化为string
         /// </summary>
@@ -1111,6 +1325,11 @@ namespace DodemUdpServer
             return status;
         }
 
+        /// <summary>
+        /// 发送历史数据指令
+        /// </summary>
+        /// <param name="SelectDeviceName"></param>
+        /// <returns></returns>
         public int SendMessage_GetDeviceHistoryData(string SelectDeviceName)
         {
             int status = 0;
@@ -1136,6 +1355,12 @@ namespace DodemUdpServer
             return status;
         }
 
+        /// <summary>
+        /// 发送当前最新数据指令
+        /// </summary>
+        /// <param name="SelectDeviceName"></param>
+        /// <param name="strParameter"></param>
+        /// <returns></returns>
         public int SendMessage_GetDeviceNowData(string SelectDeviceName, byte[] strParameter)
         {
             int status = 0;
@@ -1148,6 +1373,68 @@ namespace DodemUdpServer
                     DataLenth[0] = 0x00;
                     DataLenth[1] = 0x02;
                     byte[] Messages = CreateSetDeviceByOrder(stringTObyte(SelectDeviceName), strParameter, 0x21, DataLenth);
+                    //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
+                    int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
+                    if (sendlenth == Messages.Length)
+                    {
+                        MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), mDevice[i].GetDeviceIPEndPoint(), "应答指令:" + byteTOstring(Messages)));
+                    }
+                    status = i;
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        /// <summary>
+        /// 发送请求照片指令
+        /// </summary>
+        /// <param name="SelectDeviceName"></param>
+        /// <param name="strParameter"></param>
+        /// <returns></returns>
+        public int SendMessage_GetDeviceNowPicture(string SelectDeviceName, byte[] strParameter)
+        {
+            int status = 0;
+            for (int i = 0; i < mDevice.Count; i++)
+            {
+                if (mDevice[i].GetDeviceIMEI() == SelectDeviceName && mDevice[i].GetStatus() > 0)
+                {
+                    //mDevice[i].SetStatus(res);
+                    byte[] DataLenth = new byte[2];
+                    DataLenth[0] = 0x00;
+                    DataLenth[1] = 0x02;
+                    byte[] Messages = CreateSetDeviceByOrder(stringTObyte(SelectDeviceName), strParameter, 0x83, DataLenth);
+                    //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
+                    int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
+                    if (sendlenth == Messages.Length)
+                    {
+                        MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), mDevice[i].GetDeviceIPEndPoint(), "应答指令:" + byteTOstring(Messages)));
+                    }
+                    status = i;
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        /// <summary>
+        /// 下发图片补包指令
+        /// </summary>
+        /// <param name="SelectDeviceName"></param>
+        /// <param name="strParameter"></param>
+        /// <returns></returns>
+        public int SendMessage_GetMissPicturePackages(string DeviceIMEI, byte[] strParameter)
+        {
+            int status = 0;
+            for (int i = 0; i < mDevice.Count; i++)
+            {
+                if (mDevice[i].GetDeviceIMEI() == DeviceIMEI && mDevice[i].GetStatus() > 0)
+                {
+                    //mDevice[i].SetStatus(res);
+                    byte[] DataLenth = new byte[2];
+                    DataLenth[0] = (byte)(strParameter.Length/255);
+                    DataLenth[1] = (byte)(strParameter.Length % 255);
+                    byte[] Messages = CreateSetDeviceByOrder(stringTObyte(DeviceIMEI), strParameter, 0x87, DataLenth);
                     //byte[] Messages = CreateSetDeviceParameter(stringTObyte(SelectDeviceName), strParameter);
                     int sendlenth = ReceiveUdpClient.Send(Messages, Messages.Length, mDevice[i].GetDeviceIPEndPoint());
                     if (sendlenth == Messages.Length)

@@ -815,5 +815,35 @@ namespace DodemUdpServer
                 MessageBox.Show("没有选中设备");
             }
         }
+
+        /// <summary>
+        /// 主动请求图片上传 0x83
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_RequestPicture_Click(object sender, EventArgs e)
+        {
+            byte[] orderByte = new byte[2];
+            if(this.radioButton_Channel1.Checked==true)
+            {
+                orderByte[0] = 0x01;
+            }
+            else
+            {
+                orderByte[0] = 0x02;
+            }
+
+            if (SelectDeviceName != null)
+            {
+                
+                orderByte[1] = 0x00;
+                mUDPServer.SendMessage_GetDeviceNowPicture(SelectDeviceName, orderByte);
+
+            }
+            else
+            {
+                MessageBox.Show("没有选中设备");
+            }
+        }
     }
 }

@@ -90,25 +90,35 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.button_CheckDeviceTime = new System.Windows.Forms.Button();
+            this.button_SetDeviceFunction = new System.Windows.Forms.Button();
+            this.textBox_OrderNumber = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.comboBox_Function = new System.Windows.Forms.ComboBox();
+            this.button_CheckDeviceParameters = new System.Windows.Forms.Button();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.button_DeviceReset = new System.Windows.Forms.Button();
+            this.button_WeekUp = new System.Windows.Forms.Button();
             this.textBox_ResetPassWord = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.button_WeekUp = new System.Windows.Forms.Button();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.button_CheckDeviceParameters = new System.Windows.Forms.Button();
-            this.comboBox_Function = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.textBox_OrderNumber = new System.Windows.Forms.TextBox();
-            this.button_SetDeviceFunction = new System.Windows.Forms.Button();
-            this.button_CheckDeviceTime = new System.Windows.Forms.Button();
+            this.button_DeviceReset = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.button_UpLoadHistory = new System.Windows.Forms.Button();
             this.button_UpLoadNow = new System.Windows.Forms.Button();
+            this.button_UpLoadHistory = new System.Windows.Forms.Button();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button_RequestPicture = new System.Windows.Forms.Button();
+            this.radioButton_Channel1 = new System.Windows.Forms.RadioButton();
+            this.radioButton_Channel2 = new System.Windows.Forms.RadioButton();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -120,12 +130,18 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.groupBox9.SuspendLayout();
             this.groupBox10.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox11.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            this.groupBox13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox14.SuspendLayout();
             this.SuspendLayout();
             // 
             // button_CreatServer
@@ -727,16 +743,6 @@
             this.tabPage3.Text = "设备参数";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.tabControl_Basic);
-            this.groupBox8.Location = new System.Drawing.Point(218, 12);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(479, 242);
-            this.groupBox8.TabIndex = 16;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "基本命令";
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.groupBox10);
@@ -748,6 +754,86 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "固定指令";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.button_CheckDeviceTime);
+            this.groupBox10.Controls.Add(this.button_SetDeviceFunction);
+            this.groupBox10.Controls.Add(this.textBox_OrderNumber);
+            this.groupBox10.Controls.Add(this.label23);
+            this.groupBox10.Controls.Add(this.label22);
+            this.groupBox10.Controls.Add(this.comboBox_Function);
+            this.groupBox10.Controls.Add(this.button_CheckDeviceParameters);
+            this.groupBox10.Location = new System.Drawing.Point(6, 90);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(444, 97);
+            this.groupBox10.TabIndex = 1;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "无参数指令";
+            // 
+            // button_CheckDeviceTime
+            // 
+            this.button_CheckDeviceTime.Location = new System.Drawing.Point(363, 22);
+            this.button_CheckDeviceTime.Name = "button_CheckDeviceTime";
+            this.button_CheckDeviceTime.Size = new System.Drawing.Size(75, 23);
+            this.button_CheckDeviceTime.TabIndex = 6;
+            this.button_CheckDeviceTime.Text = "查询时间";
+            this.button_CheckDeviceTime.UseVisualStyleBackColor = true;
+            this.button_CheckDeviceTime.Click += new System.EventHandler(this.button_CheckDeviceTime_Click);
+            // 
+            // button_SetDeviceFunction
+            // 
+            this.button_SetDeviceFunction.Location = new System.Drawing.Point(212, 47);
+            this.button_SetDeviceFunction.Name = "button_SetDeviceFunction";
+            this.button_SetDeviceFunction.Size = new System.Drawing.Size(75, 23);
+            this.button_SetDeviceFunction.TabIndex = 5;
+            this.button_SetDeviceFunction.Text = "功能配置";
+            this.button_SetDeviceFunction.UseVisualStyleBackColor = true;
+            this.button_SetDeviceFunction.Click += new System.EventHandler(this.button_SetDeviceFunction_Click);
+            // 
+            // textBox_OrderNumber
+            // 
+            this.textBox_OrderNumber.Location = new System.Drawing.Point(87, 47);
+            this.textBox_OrderNumber.Name = "textBox_OrderNumber";
+            this.textBox_OrderNumber.Size = new System.Drawing.Size(100, 21);
+            this.textBox_OrderNumber.TabIndex = 4;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(29, 51);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(41, 12);
+            this.label23.TabIndex = 3;
+            this.label23.Text = "命令字";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(23, 26);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(53, 12);
+            this.label22.TabIndex = 2;
+            this.label22.Text = "功能配置";
+            // 
+            // comboBox_Function
+            // 
+            this.comboBox_Function.FormattingEnabled = true;
+            this.comboBox_Function.Location = new System.Drawing.Point(87, 20);
+            this.comboBox_Function.Name = "comboBox_Function";
+            this.comboBox_Function.Size = new System.Drawing.Size(200, 20);
+            this.comboBox_Function.TabIndex = 1;
+            this.comboBox_Function.SelectedIndexChanged += new System.EventHandler(this.comboBox_Function_SelectedIndexChanged);
+            // 
+            // button_CheckDeviceParameters
+            // 
+            this.button_CheckDeviceParameters.Location = new System.Drawing.Point(363, 66);
+            this.button_CheckDeviceParameters.Name = "button_CheckDeviceParameters";
+            this.button_CheckDeviceParameters.Size = new System.Drawing.Size(75, 23);
+            this.button_CheckDeviceParameters.TabIndex = 0;
+            this.button_CheckDeviceParameters.Text = "查询配置";
+            this.button_CheckDeviceParameters.UseVisualStyleBackColor = true;
+            this.button_CheckDeviceParameters.Click += new System.EventHandler(this.button_CheckDeviceParameters_Click);
             // 
             // groupBox9
             // 
@@ -762,15 +848,15 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "带参数指令";
             // 
-            // button_DeviceReset
+            // button_WeekUp
             // 
-            this.button_DeviceReset.Location = new System.Drawing.Point(212, 15);
-            this.button_DeviceReset.Name = "button_DeviceReset";
-            this.button_DeviceReset.Size = new System.Drawing.Size(75, 23);
-            this.button_DeviceReset.TabIndex = 0;
-            this.button_DeviceReset.Text = "设备复位";
-            this.button_DeviceReset.UseVisualStyleBackColor = true;
-            this.button_DeviceReset.Click += new System.EventHandler(this.button_DeviceReset_Click);
+            this.button_WeekUp.Location = new System.Drawing.Point(212, 45);
+            this.button_WeekUp.Name = "button_WeekUp";
+            this.button_WeekUp.Size = new System.Drawing.Size(75, 23);
+            this.button_WeekUp.TabIndex = 16;
+            this.button_WeekUp.Text = "短信唤醒";
+            this.button_WeekUp.UseVisualStyleBackColor = true;
+            this.button_WeekUp.Click += new System.EventHandler(this.button_WeekUp_Click);
             // 
             // textBox_ResetPassWord
             // 
@@ -789,95 +875,15 @@
             this.label21.TabIndex = 14;
             this.label21.Text = "设备密码";
             // 
-            // button_WeekUp
+            // button_DeviceReset
             // 
-            this.button_WeekUp.Location = new System.Drawing.Point(212, 45);
-            this.button_WeekUp.Name = "button_WeekUp";
-            this.button_WeekUp.Size = new System.Drawing.Size(75, 23);
-            this.button_WeekUp.TabIndex = 16;
-            this.button_WeekUp.Text = "短信唤醒";
-            this.button_WeekUp.UseVisualStyleBackColor = true;
-            this.button_WeekUp.Click += new System.EventHandler(this.button_WeekUp_Click);
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.Controls.Add(this.button_CheckDeviceTime);
-            this.groupBox10.Controls.Add(this.button_SetDeviceFunction);
-            this.groupBox10.Controls.Add(this.textBox_OrderNumber);
-            this.groupBox10.Controls.Add(this.label23);
-            this.groupBox10.Controls.Add(this.label22);
-            this.groupBox10.Controls.Add(this.comboBox_Function);
-            this.groupBox10.Controls.Add(this.button_CheckDeviceParameters);
-            this.groupBox10.Location = new System.Drawing.Point(6, 90);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(444, 97);
-            this.groupBox10.TabIndex = 1;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "无参数指令";
-            // 
-            // button_CheckDeviceParameters
-            // 
-            this.button_CheckDeviceParameters.Location = new System.Drawing.Point(363, 66);
-            this.button_CheckDeviceParameters.Name = "button_CheckDeviceParameters";
-            this.button_CheckDeviceParameters.Size = new System.Drawing.Size(75, 23);
-            this.button_CheckDeviceParameters.TabIndex = 0;
-            this.button_CheckDeviceParameters.Text = "查询配置";
-            this.button_CheckDeviceParameters.UseVisualStyleBackColor = true;
-            this.button_CheckDeviceParameters.Click += new System.EventHandler(this.button_CheckDeviceParameters_Click);
-            // 
-            // comboBox_Function
-            // 
-            this.comboBox_Function.FormattingEnabled = true;
-            this.comboBox_Function.Location = new System.Drawing.Point(87, 20);
-            this.comboBox_Function.Name = "comboBox_Function";
-            this.comboBox_Function.Size = new System.Drawing.Size(200, 20);
-            this.comboBox_Function.TabIndex = 1;
-            this.comboBox_Function.SelectedIndexChanged += new System.EventHandler(this.comboBox_Function_SelectedIndexChanged);
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(23, 26);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(53, 12);
-            this.label22.TabIndex = 2;
-            this.label22.Text = "功能配置";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(29, 51);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(41, 12);
-            this.label23.TabIndex = 3;
-            this.label23.Text = "命令字";
-            // 
-            // textBox_OrderNumber
-            // 
-            this.textBox_OrderNumber.Location = new System.Drawing.Point(87, 47);
-            this.textBox_OrderNumber.Name = "textBox_OrderNumber";
-            this.textBox_OrderNumber.Size = new System.Drawing.Size(100, 21);
-            this.textBox_OrderNumber.TabIndex = 4;
-            // 
-            // button_SetDeviceFunction
-            // 
-            this.button_SetDeviceFunction.Location = new System.Drawing.Point(212, 47);
-            this.button_SetDeviceFunction.Name = "button_SetDeviceFunction";
-            this.button_SetDeviceFunction.Size = new System.Drawing.Size(75, 23);
-            this.button_SetDeviceFunction.TabIndex = 5;
-            this.button_SetDeviceFunction.Text = "功能配置";
-            this.button_SetDeviceFunction.UseVisualStyleBackColor = true;
-            this.button_SetDeviceFunction.Click += new System.EventHandler(this.button_SetDeviceFunction_Click);
-            // 
-            // button_CheckDeviceTime
-            // 
-            this.button_CheckDeviceTime.Location = new System.Drawing.Point(363, 22);
-            this.button_CheckDeviceTime.Name = "button_CheckDeviceTime";
-            this.button_CheckDeviceTime.Size = new System.Drawing.Size(75, 23);
-            this.button_CheckDeviceTime.TabIndex = 6;
-            this.button_CheckDeviceTime.Text = "查询时间";
-            this.button_CheckDeviceTime.UseVisualStyleBackColor = true;
-            this.button_CheckDeviceTime.Click += new System.EventHandler(this.button_CheckDeviceTime_Click);
+            this.button_DeviceReset.Location = new System.Drawing.Point(212, 15);
+            this.button_DeviceReset.Name = "button_DeviceReset";
+            this.button_DeviceReset.Size = new System.Drawing.Size(75, 23);
+            this.button_DeviceReset.TabIndex = 0;
+            this.button_DeviceReset.Text = "设备复位";
+            this.button_DeviceReset.UseVisualStyleBackColor = true;
+            this.button_DeviceReset.Click += new System.EventHandler(this.button_DeviceReset_Click);
             // 
             // tabPage5
             // 
@@ -901,16 +907,6 @@
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "请求";
             // 
-            // button_UpLoadHistory
-            // 
-            this.button_UpLoadHistory.Location = new System.Drawing.Point(363, 18);
-            this.button_UpLoadHistory.Name = "button_UpLoadHistory";
-            this.button_UpLoadHistory.Size = new System.Drawing.Size(75, 23);
-            this.button_UpLoadHistory.TabIndex = 0;
-            this.button_UpLoadHistory.Text = "上床历史";
-            this.button_UpLoadHistory.UseVisualStyleBackColor = true;
-            this.button_UpLoadHistory.Click += new System.EventHandler(this.button_UpLoadHistory_Click);
-            // 
             // button_UpLoadNow
             // 
             this.button_UpLoadNow.Location = new System.Drawing.Point(363, 47);
@@ -921,11 +917,135 @@
             this.button_UpLoadNow.UseVisualStyleBackColor = true;
             this.button_UpLoadNow.Click += new System.EventHandler(this.button_UpLoadNow_Click);
             // 
+            // button_UpLoadHistory
+            // 
+            this.button_UpLoadHistory.Location = new System.Drawing.Point(363, 18);
+            this.button_UpLoadHistory.Name = "button_UpLoadHistory";
+            this.button_UpLoadHistory.Size = new System.Drawing.Size(75, 23);
+            this.button_UpLoadHistory.TabIndex = 0;
+            this.button_UpLoadHistory.Text = "上床历史";
+            this.button_UpLoadHistory.UseVisualStyleBackColor = true;
+            this.button_UpLoadHistory.Click += new System.EventHandler(this.button_UpLoadHistory_Click);
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.tabControl_Basic);
+            this.groupBox8.Location = new System.Drawing.Point(218, 12);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(479, 242);
+            this.groupBox8.TabIndex = 16;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "基本命令";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage6);
+            this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Location = new System.Drawing.Point(10, 20);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(457, 110);
+            this.tabControl1.TabIndex = 17;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.groupBox14);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(449, 84);
+            this.tabPage6.TabIndex = 0;
+            this.tabPage6.Text = "图像";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(449, 84);
+            this.tabPage7.TabIndex = 1;
+            this.tabPage7.Text = "tabPage7";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.tabControl1);
+            this.groupBox12.Location = new System.Drawing.Point(224, 255);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(473, 130);
+            this.groupBox12.TabIndex = 18;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "分类指令";
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.pictureBox1);
+            this.groupBox13.Location = new System.Drawing.Point(716, 260);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(271, 125);
+            this.groupBox13.TabIndex = 19;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "采集图片";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(1, 16);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(265, 110);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // button_RequestPicture
+            // 
+            this.button_RequestPicture.Location = new System.Drawing.Point(174, 14);
+            this.button_RequestPicture.Name = "button_RequestPicture";
+            this.button_RequestPicture.Size = new System.Drawing.Size(75, 23);
+            this.button_RequestPicture.TabIndex = 0;
+            this.button_RequestPicture.Text = "请求图片";
+            this.button_RequestPicture.UseVisualStyleBackColor = true;
+            this.button_RequestPicture.Click += new System.EventHandler(this.button_RequestPicture_Click);
+            // 
+            // radioButton_Channel1
+            // 
+            this.radioButton_Channel1.AutoSize = true;
+            this.radioButton_Channel1.Location = new System.Drawing.Point(6, 16);
+            this.radioButton_Channel1.Name = "radioButton_Channel1";
+            this.radioButton_Channel1.Size = new System.Drawing.Size(53, 16);
+            this.radioButton_Channel1.TabIndex = 1;
+            this.radioButton_Channel1.TabStop = true;
+            this.radioButton_Channel1.Text = "通道1";
+            this.radioButton_Channel1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_Channel2
+            // 
+            this.radioButton_Channel2.AutoSize = true;
+            this.radioButton_Channel2.Location = new System.Drawing.Point(74, 16);
+            this.radioButton_Channel2.Name = "radioButton_Channel2";
+            this.radioButton_Channel2.Size = new System.Drawing.Size(53, 16);
+            this.radioButton_Channel2.TabIndex = 2;
+            this.radioButton_Channel2.TabStop = true;
+            this.radioButton_Channel2.Text = "通道2";
+            this.radioButton_Channel2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.radioButton_Channel1);
+            this.groupBox14.Controls.Add(this.button_RequestPicture);
+            this.groupBox14.Controls.Add(this.radioButton_Channel2);
+            this.groupBox14.Location = new System.Drawing.Point(4, -4);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(260, 43);
+            this.groupBox14.TabIndex = 3;
+            this.groupBox14.TabStop = false;
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 627);
+            this.Controls.Add(this.groupBox13);
+            this.Controls.Add(this.groupBox12);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
@@ -951,14 +1071,21 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox9.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox13.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1046,6 +1173,16 @@
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Button button_UpLoadNow;
         private System.Windows.Forms.Button button_UpLoadHistory;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button button_RequestPicture;
+        private System.Windows.Forms.RadioButton radioButton_Channel2;
+        private System.Windows.Forms.RadioButton radioButton_Channel1;
+        private System.Windows.Forms.GroupBox groupBox14;
     }
 }
 
