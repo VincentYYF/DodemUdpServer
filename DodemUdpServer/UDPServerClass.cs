@@ -391,6 +391,7 @@ namespace DodemUdpServer
                 //CheckDeviceList(Device_Imei, refIPEndPoint, Messages);
                 //在检查数据正确后，检查数据格式
                 int sendlenth;
+                int status;
                 switch (Messages[7])
                 {
                     case 0x00:
@@ -406,8 +407,18 @@ namespace DodemUdpServer
                         break;
                     case 0x01:
                         MessageArrived(string.Format("校时"));
-                        
-                        SetMessageDeviceStatus(Messages, 2);
+                        status = GetMessageDeviceStatus(Messages);
+                        if(status<2)
+                        {
+                            sendlenth = ReceiveUdpClient.Send(CreatCheckTimeOrder(Messages), CreatCheckTimeOrder(Messages).Length, refIPEndPoint);
+
+                            if (sendlenth == Messages.Length)
+                            {
+                                MessageArrived(string.Format("{0}应答{1}:{2}", DateTime.Now.ToString(), refIPEndPoint, "应答指令:" + byteTOstring(Messages)));
+                            }
+                        }
+                       
+                        SetMessageDeviceStatus(Messages, 3);
                         break;
                     case 0x02:
                         MessageArrived(string.Format("设置终端密码"));
@@ -417,7 +428,7 @@ namespace DodemUdpServer
                         break;
                     case 0x05:
                         MessageArrived(string.Format("终端心跳信息"));
-                        int status = GetMessageDeviceStatus(Messages);
+                        status = GetMessageDeviceStatus(Messages);
                         if (status == 2)
                         {
                             sendlenth = ReceiveUdpClient.Send(CreatCheckTimeOrder(Messages), CreatCheckTimeOrder(Messages).Length, refIPEndPoint);

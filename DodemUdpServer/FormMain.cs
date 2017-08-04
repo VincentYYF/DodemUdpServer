@@ -104,7 +104,7 @@ namespace DodemUdpServer
         }
         public void InitLocalIpStatus()
         {
-            textBox_PORT.Text = "8080";
+            textBox_PORT.Text = "56666";
             comboBox_IP.Items.Add("127.0.0.1");
             IPAddress[] ips = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
             foreach (IPAddress ipa in ips)
